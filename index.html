@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bootcamp Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for better aesthetics */
+        .timeline-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .timeline-container::-webkit-scrollbar-track {
+            background: #1e293b; /* slate-800 */
+        }
+        .timeline-container::-webkit-scrollbar-thumb {
+            background: #475569; /* slate-600 */
+            border-radius: 4px;
+        }
+        .timeline-container::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* slate-500 */
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white antialiased">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Header Section -->
+        <header class="text-center mb-8 md:mb-12">
+            <!-- Sponsor Logo -->
+            <div class="mb-6">
+                <p class="text-sm text-slate-400 mb-2">Sponsored by</p>
+                <img 
+                    src="https://media.licdn.com/dms/image/v2/D560BAQFs6ZeYsqdnxw/company-logo_200_200/company-logo_200_200/0/1726217814435/bigrededucation_logo?e=2147483647&v=beta&t=39OZvn7WGRyGcpW4VCtfWrc9i59usPsG4Y2K7m3y_Pg" 
+                    alt="Big Red Education Logo" 
+                    class="w-24 h-24 mx-auto rounded-full bg-white p-1 shadow-lg shadow-purple-500/20"
+                    onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffffff/94a3b8?text=Logo+Not+Found';">
+            </div>
+
+            <h1 class="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-2">
+                Command Z: AI for Teens
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300">An Interactive Bootcamp Agenda</p>
+        </header>
+
+        <!-- Main Content -->
+        <div id="infographic" class="max-w-5xl mx-auto bg-slate-800/50 rounded-2xl shadow-2xl shadow-purple-500/10 backdrop-blur-sm border border-slate-700">
+            
+            <!-- Day Navigation Tabs -->
+            <nav class="flex justify-center border-b border-slate-700 p-2 space-x-1 md:space-x-2">
+                <!-- Tabs will be dynamically inserted here -->
+            </nav>
+
+            <!-- Content Panels -->
+            <div id="content-panels" class="p-4 sm:p-6 md:p-8">
+                <!-- Day content will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 text-slate-500 text-sm">
+            <p>Interactive schedule created by Gemini.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- DATA ---
+        // Updated data reflecting the new "Command Z: AI for Teens" agenda.
+        const bootcampData = [
+            {
+                day: 1,
+                title: "Foundations of AI & Human Understanding",
+                description: "Building the base: what AI is, how we use it, and how to start speaking its language.",
+                schedule: [
+                    { time: "9:00 - 9:30 AM", session: "Welcome & Icebreakers", format: "Activity", details: "\"AI-Generated Introductions\" - students use ChatGPT to create playful, personalized intros." },
+                    { time: "9:30 - 10:00 AM", session: "What is AI?", format: "Lecture", details: "A beginner-friendly overview of AI types, capabilities, and everyday applications." },
+                    { time: "10:00 - 10:30 AM", session: "Prompt Engineering: How to Talk to AI", format: "Lecture", details: "Learn key principles like clarity, constraints, tone, and iteration for better AI results." },
+                    { time: "10:30 - 11:15 AM", session: "Prompt Engineering Workshop", format: "Activity", details: "Students experiment with prompt tuning, comparing different outputs and styles." },
+                    { time: "11:15 - 11:45 AM", session: "History of AI: From Turing to Today", format: "Lecture", details: "A rapid-fire walk through the evolution of AI, from logic machines to large language models." },
+                    { time: "11:45 - 12:15 PM", session: "The Turing Test", format: "Lecture", details: "What it is, why it matters, and how it changed how we think about machine intelligence." },
+                    { time: "12:15 - 1:15 PM", session: "Lunch Break", format: "Break", details: "Time to recharge and socialize." },
+                    { time: "1:15 - 2:15 PM", session: "Turing Test Challenge", format: "Activity", details: "Students guess whether quirky AI-generated responses are written by humans or machines." },
+                    { time: "2:15 - 2:45 PM", session: "Group Debrief + Ethical Warm-Up", format: "Discussion", details: "Open floor for surprises from the activity, setting up the ethics theme for Day 2." },
+                    { time: "2:45 - 3:00 PM", session: "Day 1 Wrap-Up + Preview of Day 2", format: "Recap", details: "Light discussion and preview of the ethics and bias focus to come." }
+                ]
+            },
+            {
+                day: 2,
+                title: "Language, Ethics & AI in the Academic World",
+                description: "Understanding AI's limitations, ethical implications, and how to use it responsibly in academic settings.",
+                schedule: [
+                    { time: "9:00 - 9:30 AM", session: "AI Terminology Deep Dive", format: "Lecture", details: "Clarify foundational terms like tokens, weights, embeddings, hallucinations, and inference." },
+                    { time: "9:30 - 10:00 AM", session: "AI MythBusters: Truth or Hype?", format: "Activity", details: "Interactive myth-vs-truth session with live voting and discussion via Top Hat." },
+                    { time: "10:00 - 10:45 AM", session: "AI in Higher Education: What to Expect", format: "Lecture", details: "Explore the evolving role of AI in college policies, risks, human-in-the-loop ethics, and responsible use." },
+                    { time: "10:45 - 11:45 AM", session: "AI Ethics & Bias in the Machine", format: "Lecture", details: "Examine real-world bias in datasets, AI-generated decisions, and their social impact." },
+                    { time: "11:45 - 12:45 PM", session: "Lunch Break", format: "Break", details: "Social time and recovery." },
+                    { time: "12:45 - 1:45 PM", session: "AI Ethics Debate", format: "Activity", details: "Students debate controversial uses of AI (e.g., autonomous drones, AI grading, predictive policing) with assigned viewpoints." },
+                    { time: "1:45 - 2:30 PM", session: "AI for Research", format: "Lecture", details: "Demonstration of tools like Perplexity.ai, SciSpace, Research Rabbit, Elicit, and Connected Papers for academic research workflows." },
+                    { time: "2:30 - 3:00 PM", session: "Daily Wrap-Up: What Surprised You Today?", format: "Reflection", details: "Group discussion or journaling around assumptions challenged and new skills learned." }
+                ]
+            },
+            {
+                day: 3,
+                title: "AI as a Creative & Cognitive Companion",
+                description: "From memory extension and voice to research, industry, and real-world decision-making.",
+                schedule: [
+                    { time: "9:00 - 9:30 AM", session: "AI as a Second Brain", format: "Lecture", details: "Explore how AI can help organize, recall, and reflect - a digital extension of cognition." },
+                    { time: "9:30 - 10:30 AM", session: "Build Your Philosophy Brain with NotebookLM", format: "Activity", details: "Students upload text or notes to build a \"philosophy brain,\" then generate a podcast or answer philosophical prompts using AI." },
+                    { time: "10:30 - 11:15 AM", session: "Crossing the Uncanny Valley: AI Voice Tech", format: "Lecture", details: "Explore voice synthesis, realism, identity, and the future of voice-based AI interaction." },
+                    { time: "11:15 - 12:15 PM", session: "Voice Cloning Lab", format: "Activity", details: "Students use tools like ElevenLabs or OpenAI TTS to create and perform voiceover scenes." },
+                    { time: "12:15 - 1:15 PM", session: "Lunch Break", format: "Break", details: "Recharge & informal exploration." },
+                    { time: "1:15 - 2:00 PM", session: "AI in Industry + Augmented Decision-Making", format: "Lecture", details: "Learn how AI is used across healthcare, law, logistics, education, and media and where humans must remain \"in the loop\"." },
+                    { time: "2:00 - 2:45 PM", session: "AI Deep Research Activity", format: "Hands-On", details: "Students explore Perplexity, Gemini, ChatGPT, GROK, and Storm to compare how different tools approach the same research query." },
+                    { time: "2:45 - 3:00 PM", session: "Wrap-Up & Reflection", format: "Discussion", details: "Open debrief: How might these tools shape your future learning or professional life?" }
+                ]
+            },
+            {
+                day: 4,
+                title: "Builders, Creators, and the Future of Al",
+                description: "Final day focused on applied creativity, custom tools, and a look into the Al-powered future.",
+                schedule: [
+                    { time: "9:00 - 9:30 AM", session: "The Future of AI: AGI, ASI & the Singularity", format: "Lecture", details: "Explore Al's predicted trajectory as a general-purpose technology, and concepts like AGI, ASI, and the Singularity." },
+                    { time: "9:30 - 10:00 AM", session: "Custom GPTS: Building Al with Purpose", format: "Lecture", details: "Overview of designing GPTs with memory, rules, personas, and specific tasks using OpenAl's Custom GPT tools." },
+                    { time: "10:00 - 10:30 AM", session: "Hands-On: Build Your Own GPT", format: "Activity", details: "Students create GPTs tailored to specific goals - creative, academic, productivity, or personal assistant." },
+                    { time: "10:30 - 11:30 AM", session: "Gamma.app Presentation Builder Lab", format: "Activity", details: "Students build Al-enhanced visual presentations (e.g., about their GPTs or favorite Al topic explored during the week)." },
+                    { time: "11:30 - 12:30 PM", session: "Lunch Break", format: "Break", details: "Final day lunch break." },
+                    { time: "12:30 - 1:00 PM", session: "Vibe Coding: No-Code Infographic Creation", format: "Activity", details: "Use Gamma, Canva, or similar tools to create a visual one-pager summarizing a core idea from the week." },
+                    { time: "1:00 - 1:30 PM", session: "Al in Gaming: Remixing Classics", format: "Activity", details: "Use Replit or Scratch to customize or remix a basic game (e.g., Tetris or Snake) using Al assistance or storytelling." },
+                    { time: "1:30 - 2:30 PM", session: "Creative Showcase: GPTs, Games, & Slides", format: "Showcase", details: "Final presentations! Students demo GPTS, games, visuals, or slides lightning style or team-based - with audience feedback and celebration." },
+                    { time: "2:30 - 3:00 PM", session: "Closing Ceremony + Certificates", format: "Celebration", details: "Group photo, Al Superlatives, final Q&A, and parting words - end on a high note!" }
+                ]
+            }
+        ];
+
+        // --- ICONS ---
+        // SVG icons for different session formats to add visual cues.
+        const icons = {
+            Lecture: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
+            Activity: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
+            Discussion: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>`,
+            Break: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+            Reflection: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-9-5.747h18"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 9.375c0-2.028 2.05-3.625 4.5-3.625s4.5 1.597 4.5 3.625M20.25 9.375c0-2.028-2.05-3.625-4.5-3.625s-4.5 1.597-4.5 3.625M3.75 14.625c0 2.028 2.05 3.625 4.5 3.625s4.5-1.597 4.5-3.625M20.25 14.625c0 2.028-2.05-3.625-4.5-3.625s-4.5-1.597-4.5-3.625"></path></svg>`,
+            "Hands-On": `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z"></path></svg>`,
+            Showcase: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>`,
+            Celebration: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z"></path></svg>`,
+            Recap: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 20h5v-5M20 4h-5v5"></path></svg>`
+        };
+        const formatColors = {
+            Lecture: "bg-sky-500/20 text-sky-300 border-sky-500/30",
+            Activity: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+            Discussion: "bg-teal-500/20 text-teal-300 border-teal-500/30",
+            Break: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+            Reflection: "bg-rose-500/20 text-rose-300 border-rose-500/30",
+            "Hands-On": "bg-green-500/20 text-green-300 border-green-500/30",
+            Showcase: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+            Celebration: "bg-pink-500/20 text-pink-300 border-pink-500/30",
+            Recap: "bg-gray-500/20 text-gray-300 border-gray-500/30"
+        }
+
+        // --- DOM ELEMENTS ---
+        const navContainer = document.querySelector('#infographic nav');
+        const contentPanelsContainer = document.getElementById('content-panels');
+
+        // --- FUNCTIONS ---
+
+        /**
+         * Creates and returns the HTML for a single timeline item.
+         * @param {object} item - The schedule item object.
+         * @returns {string} - The HTML string for the timeline item.
+         */
+        function createTimelineItem(item) {
+            const formatClass = formatColors[item.format] || formatColors.Recap;
+            return `
+                <div class="timeline-item flex space-x-4">
+                    <!-- Timeline Marker -->
+                    <div class="flex flex-col items-center">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full ${formatClass} flex items-center justify-center border">
+                           ${icons[item.format] || ''}
+                        </div>
+                        <div class="w-px h-full bg-slate-600"></div>
+                    </div>
+                    <!-- Timeline Content -->
+                    <div class="pb-8">
+                        <p class="mb-1 text-sm font-semibold text-slate-300">${item.time}</p>
+                        <h4 class="font-bold text-lg text-white">${item.session}</h4>
+                        <p class="mt-1 text-slate-400">${item.details}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Creates and returns the HTML for a full day's content panel.
+         * @param {object} dayData - The data object for a single day.
+         * @param {boolean} isActive - Whether this panel should be visible initially.
+         * @returns {string} - The HTML string for the content panel.
+         */
+        function createContentPanel(dayData, isActive) {
+            const timelineItemsHTML = dayData.schedule.map(createTimelineItem).join('');
+            return `
+                <div id="day-${dayData.day}-content" class="day-panel ${isActive ? 'block' : 'hidden'}">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white">${dayData.title}</h3>
+                        <p class="text-slate-400 mt-1">${dayData.description}</p>
+                    </div>
+                    <div class="relative timeline-container max-h-[60vh] overflow-y-auto pr-2 -mr-2">
+                        ${timelineItemsHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Switches the visible content panel.
+         * @param {number} dayNumber - The day number to show.
+         */
+        function switchTab(dayNumber) {
+            // Update content panels
+            document.querySelectorAll('.day-panel').forEach(panel => {
+                panel.classList.add('hidden');
+            });
+            document.getElementById(`day-${dayNumber}-content`).classList.remove('hidden');
+
+            // Update tab styles
+            document.querySelectorAll('.day-tab').forEach(tab => {
+                if (tab.dataset.day == dayNumber) {
+                    tab.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
+                    tab.classList.remove('bg-slate-700', 'text-slate-300', 'hover:bg-slate-600');
+                } else {
+                    tab.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
+                    tab.classList.add('bg-slate-700', 'text-slate-300', 'hover:bg-slate-600');
+                }
+            });
+        }
+
+        // --- INITIALIZATION ---
+
+        /**
+         * Initializes the infographic by generating all dynamic content.
+         */
+        function initializeInfographic() {
+            let navHTML = '';
+            let contentHTML = '';
+
+            bootcampData.forEach((dayData, index) => {
+                const isActive = index === 0;
+                // Create navigation tab
+                navHTML += `
+                    <button 
+                        class="day-tab flex-1 md:flex-initial md:px-6 py-2 text-sm md:text-base font-semibold rounded-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-800 ${isActive ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}" 
+                        data-day="${dayData.day}"
+                    >
+                        Day ${dayData.day}
+                    </button>
+                `;
+                // Create content panel
+                contentHTML += createContentPanel(dayData, isActive);
+            });
+
+            navContainer.innerHTML = navHTML;
+            contentPanelsContainer.innerHTML = contentHTML;
+
+            // Add event listeners to the new tabs
+            document.querySelectorAll('.day-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    switchTab(tab.dataset.day);
+                });
+            });
+        }
+
+        // Run the initialization function when the script loads.
+        initializeInfographic();
+
+    </script>
+</body>
+</html>
