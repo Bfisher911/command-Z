@@ -24,6 +24,21 @@
         .timeline-container::-webkit-scrollbar-thumb:hover {
             background: #64748b; /* slate-500 */
         }
+        /* Animation for modal */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-fade-in {
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+        .modal-scale-in {
+            animation: scaleIn 0.2s ease-out forwards;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-white antialiased">
@@ -68,6 +83,18 @@
         </footer>
     </div>
 
+    <!-- Link Modal -->
+    <div id="linkModal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center p-4 z-50 hidden modal-fade-in">
+        <div id="modalContent" class="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl w-full max-w-md p-6 text-white relative modal-scale-in">
+            <button id="closeModal" class="absolute top-3 right-4 text-slate-400 hover:text-white transition-colors text-2xl font-bold">&times;</button>
+            <h3 id="modalTitle" class="text-xl font-bold mb-4">Launch Tools</h3>
+            <div id="modalLinks" class="space-y-3">
+                <!-- Links will be dynamically injected here -->
+            </div>
+        </div>
+    </div>
+
+
     <script>
         // --- DATA ---
         // Updated data reflecting the new "Command Z: AI for Teens" agenda.
@@ -75,70 +102,79 @@
             {
                 day: 1,
                 title: "Foundations of AI & Human Understanding",
-                description: "Building the base: what AI is, how we use it, and how to start speaking its language.",
+                description: "Day 1: 1:00 PM - 7:00 PM. Building the base, what AI is, and how to start speaking its language.",
                 schedule: [
-                    { time: "9:00 - 9:30 AM", session: "Welcome & Icebreakers", format: "Activity", details: "\"AI-Generated Introductions\" - students use ChatGPT to create playful, personalized intros." },
-                    { time: "9:30 - 10:00 AM", session: "What is AI?", format: "Lecture", details: "A beginner-friendly overview of AI types, capabilities, and everyday applications." },
-                    { time: "10:00 - 10:30 AM", session: "Prompt Engineering: How to Talk to AI", format: "Lecture", details: "Learn key principles like clarity, constraints, tone, and iteration for better AI results." },
-                    { time: "10:30 - 11:15 AM", session: "Prompt Engineering Workshop", format: "Activity", details: "Students experiment with prompt tuning, comparing different outputs and styles." },
-                    { time: "11:15 - 11:45 AM", session: "History of AI: From Turing to Today", format: "Lecture", details: "A rapid-fire walk through the evolution of AI, from logic machines to large language models." },
-                    { time: "11:45 - 12:15 PM", session: "The Turing Test", format: "Lecture", details: "What it is, why it matters, and how it changed how we think about machine intelligence." },
-                    { time: "12:15 - 1:15 PM", session: "Lunch Break", format: "Break", details: "Time to recharge and socialize." },
-                    { time: "1:15 - 2:15 PM", session: "Turing Test Challenge", format: "Activity", details: "Students guess whether quirky AI-generated responses are written by humans or machines." },
-                    { time: "2:15 - 2:45 PM", session: "Group Debrief + Ethical Warm-Up", format: "Discussion", details: "Open floor for surprises from the activity, setting up the ethics theme for Day 2." },
-                    { time: "2:45 - 3:00 PM", session: "Day 1 Wrap-Up + Preview of Day 2", format: "Recap", details: "Light discussion and preview of the ethics and bias focus to come." }
+                    { time: "1:00 - 1:30 PM", session: "Welcome & Icebreakers", format: "Activity", details: "\"AI-Generated Introductions\" - students use ChatGPT to create playful, personalized intros.", interactives: [{ name: 'Meet the AI Version of You!', url: 'https://gemini.google.com/share/a139d8e63204' }] },
+                    { time: "1:30 - 2:00 PM", session: "What is AI?", format: "Lecture", details: "A beginner-friendly overview of AI types, capabilities, and everyday applications.", interactives: [{ name: 'What is AI?', url: 'https://bfisher911.github.io/What-is-AI/' }, { name: 'What is a Neural Network?', url: 'https://bfisher911.github.io/What-is-a-Neural-Network/' }, { name: 'Anatomy of a Large Language Model', url: 'https://bfisher911.github.io/Anatomy-of-a-Large-Language-Model/' }] },
+                    { time: "2:00 - 2:30 PM", session: "Prompt Engineering: How to Talk to AI", format: "Lecture", details: "Learn key principles like clarity, constraints, tone, and iteration for better AI results." },
+                    { time: "2:30 - 3:15 PM", session: "Prompt Engineering Workshop", format: "Activity", details: "Students experiment with prompt tuning, comparing different outputs and styles.", interactives: [{ name: 'Mastering the Art of Prompting', url: 'https://gemini.google.com/share/e6fe005b9bbd' }, { name: 'The Interactive Prompt Engineering Guide', url: 'https://g.co/gemini/share/521ef03f81b0' }] },
+                    { time: "3:15 - 3:45 PM", session: "History of AI: From Turing to Today", format: "Lecture", details: "A rapid-fire walk through the evolution of AI, from logic machines to large language models.", interactives: [{ name: 'AI Timeline', url: 'https://bfisher911.github.io/ai-timeline/' }], presentations: [{ name: 'The History of AI: Key Milestones & Fascinating Facts', url: 'https://gamma.app/docs/The-History-of-AI-Key-Milestones-Fascinating-Facts-f0802oobtgys8st' }] },
+                    { time: "3:45 - 4:15 PM", session: "The Turing Test", format: "Lecture", details: "What it is, why it matters, and how it changed how we think about machine intelligence.", interactives: [{ name: 'The Turing Test', url: 'https://bfisher911.github.io/The-Turing-Test/' }] },
+                    { time: "4:15 - 5:00 PM", session: "Turing Test Challenge", format: "Activity", details: "Students guess whether quirky AI-generated responses are written by humans or machines." },
+                    { time: "5:00 - 5:45 PM", session: "Dinner Break", format: "Break", details: "Time to recharge and socialize." },
+                    { time: "5:45 - 6:15 PM", session: "Custom GPTs: Building AI with Purpose", format: "Lecture", details: "Overview of designing GPTs with memory, rules, personas, and specific tasks using OpenAI's Custom GPT tools." },
+                    { time: "6:15 - 6:45 PM", session: "Hands-On: Build Your Own GPT", format: "Hands-On", details: "Students create GPTs tailored to specific goals - creative, academic, productivity, or personal assistant." },
+                    { time: "6:45 - 7:00 PM", session: "Day 1 Wrap-Up + Homework", format: "Recap", details: "Light discussion and preview. Homework: Use AI image generators to create a unique portrait of yourself.", links: [ { name: 'Google Imagen (Gemini)', url: 'https://gemini.google.com' }, { name: 'Imagen (AI Studio)', url: 'https://aistudio.google.com/generate-image' }, { name: 'Google Whisk', url: 'https://labs.google/fx/tools/whisk' }, { name: 'Meta AI', url: 'https://meta.ai' } ] }
                 ]
             },
             {
                 day: 2,
                 title: "Language, Ethics & AI in the Academic World",
-                description: "Understanding AI's limitations, ethical implications, and how to use it responsibly in academic settings.",
+                description: "Day 2: 9:00 AM - 4:00 PM. Understanding AI's limitations, ethical implications, and responsible academic use.",
                 schedule: [
-                    { time: "9:00 - 9:30 AM", session: "AI Terminology Deep Dive", format: "Lecture", details: "Clarify foundational terms like tokens, weights, embeddings, hallucinations, and inference." },
-                    { time: "9:30 - 10:00 AM", session: "AI MythBusters: Truth or Hype?", format: "Activity", details: "Interactive myth-vs-truth session with live voting and discussion via Top Hat." },
-                    { time: "10:00 - 10:45 AM", session: "AI in Higher Education: What to Expect", format: "Lecture", details: "Explore the evolving role of AI in college policies, risks, human-in-the-loop ethics, and responsible use." },
-                    { time: "10:45 - 11:45 AM", session: "AI Ethics & Bias in the Machine", format: "Lecture", details: "Examine real-world bias in datasets, AI-generated decisions, and their social impact." },
-                    { time: "11:45 - 12:45 PM", session: "Lunch Break", format: "Break", details: "Social time and recovery." },
-                    { time: "12:45 - 1:45 PM", session: "AI Ethics Debate", format: "Activity", details: "Students debate controversial uses of AI (e.g., autonomous drones, AI grading, predictive policing) with assigned viewpoints." },
-                    { time: "1:45 - 2:30 PM", session: "AI for Research", format: "Lecture", details: "Demonstration of tools like Perplexity.ai, SciSpace, Research Rabbit, Elicit, and Connected Papers for academic research workflows." },
-                    { time: "2:30 - 3:00 PM", session: "Daily Wrap-Up: What Surprised You Today?", format: "Reflection", details: "Group discussion or journaling around assumptions challenged and new skills learned." }
+                    { time: "9:00 - 9:30 AM", session: "Icebreaker: Career Dreamer", format: "Activity", details: "Explore potential career paths with Google's Career Dreamer AI and share surprising or confirming discoveries about your future direction.", links: [{ name: 'Google Career Dreamer', url: 'https://grow.google/career-dreamer/home' }] },
+                    { time: "9:30 - 10:00 AM", session: "AI Terminology Deep Dive", format: "Lecture", details: "Clarify foundational terms like tokens, weights, embeddings, hallucinations, and inference.", interactives: [{ name: 'AI Terminology Deep Dive', url: 'https://bfisher911.github.io/AI-Terminology-Deep-Dive/' }] },
+                    { time: "10:00 - 10:30 AM", session: "AI MythBusters: Truth or Hype?", format: "Activity", details: "Interactive myth-vs-truth session with live voting and discussion via Top Hat." },
+                    { time: "10:30 - 11:15 AM", session: "AI in Higher Education: What to Expect", format: "Lecture", details: "Explore the evolving role of AI in college policies, risks, human-in-the-loop ethics, and responsible use.", interactives: [{ name: 'A Student’s Guide to Using Generative AI', url: 'https://bfisher911.github.io/Student-Guide-to-Using-Generative-AI/' }] },
+                    { time: "11:15 AM - 12:00 PM", session: "AI Ethics & Bias in the Machine", format: "Lecture", details: "Examine real-world bias in datasets, AI-generated decisions, and their social impact.", presentations: [{ name: 'AI Ethics & Bias in the Machine', url: 'https://gamma.app/docs/AI-Ethics-Bias-in-the-Machine-h0t0gsp671bpbof'}] },
+                    { time: "12:00 - 1:00 PM", session: "Lunch Break", format: "Break", details: "Social time and recovery." },
+                    { time: "1:00 - 1:45 PM", session: "AI Ethics Debate", format: "Activity", details: "Students debate controversial uses of AI (e.g., autonomous drones, AI grading, predictive policing) with assigned viewpoints.", interactives: [{ name: 'AI Ethics Debate Workshop', url: 'https://bfisher911.github.io/AI-Ethics-Debate-Workshop/'}] },
+                    { time: "1:45 - 2:30 PM", session: "AI for Research", format: "Lecture", details: "Demonstration of tools like Perplexity.ai, SciSpace, Research Rabbit, Elicit, and Connected Papers for academic research workflows.", presentations: [{ name: 'Deep Research in AI', url: 'https://gamma.app/docs/Deep-Research-in-AI-pvty03b0ea1zs6o' }, { name: 'AI for Research: Tools to Enhance Your Academic Journey', url: 'https://gamma.app/docs/AI-for-Research-Tools-to-Enhance-Your-Academic-Journey-lawf231zz067duc' }] },
+                    { time: "2:30 - 3:45 PM", session: "Gamma.app Presentation Builder Lab", format: "Activity", details: "Students build AI-enhanced visual presentations on an academic topic of their choice.", links: [{ name: 'Gamma.app', url: 'https://gamma.app' }] },
+                    { time: "3:45 - 4:00 PM", session: "Daily Wrap-Up + Homework", format: "Reflection", details: "Journaling and discussion. Homework: Use Google Illuminate to upload a document and turn it into a podcast to listen to.", links: [{ name: 'Google Illuminate', url: 'https://illuminate.google.com/explore' }] }
                 ]
             },
             {
                 day: 3,
                 title: "AI as a Creative & Cognitive Companion",
-                description: "From memory extension and voice to research, industry, and real-world decision-making.",
+                description: "Day 3: 9:00 AM - 4:00 PM. From memory extension to industry, and real-world decision-making.",
                 schedule: [
-                    { time: "9:00 - 9:30 AM", session: "AI as a Second Brain", format: "Lecture", details: "Explore how AI can help organize, recall, and reflect - a digital extension of cognition." },
-                    { time: "9:30 - 10:30 AM", session: "Build Your Philosophy Brain with NotebookLM", format: "Activity", details: "Students upload text or notes to build a \"philosophy brain,\" then generate a podcast or answer philosophical prompts using AI." },
-                    { time: "10:30 - 11:15 AM", session: "Crossing the Uncanny Valley: AI Voice Tech", format: "Lecture", details: "Explore voice synthesis, realism, identity, and the future of voice-based AI interaction." },
-                    { time: "11:15 - 12:15 PM", session: "Voice Cloning Lab", format: "Activity", details: "Students use tools like ElevenLabs or OpenAI TTS to create and perform voiceover scenes." },
-                    { time: "12:15 - 1:15 PM", session: "Lunch Break", format: "Break", details: "Recharge & informal exploration." },
-                    { time: "1:15 - 2:00 PM", session: "AI in Industry + Augmented Decision-Making", format: "Lecture", details: "Learn how AI is used across healthcare, law, logistics, education, and media and where humans must remain \"in the loop\"." },
-                    { time: "2:00 - 2:45 PM", session: "AI Deep Research Activity", format: "Hands-On", details: "Students explore Perplexity, Gemini, ChatGPT, GROK, and Storm to compare how different tools approach the same research query." },
-                    { time: "2:45 - 3:00 PM", session: "Wrap-Up & Reflection", format: "Discussion", details: "Open debrief: How might these tools shape your future learning or professional life?" }
+                    { time: "9:00 - 9:30 AM", session: "Icebreaker: AI Music Generator", format: "Activity", details: "Create a short song or rap about your day or something unique about yourself using an AI music tool.", links: [{ name: 'Riffusion', url: 'https://www.riffusion.com/' }, { name: 'Suno', url: 'https://suno.com/' }] },
+                    { time: "9:30 - 10:00 AM", session: "AI as a Second Brain", format: "Lecture", details: "Explore how AI can help organize, recall, and reflect - a digital extension of cognition.", presentations: [{ name: 'Building a Second Brain with Grounded AI', url: 'https://gamma.app/docs/Building-a-Second-Brain-with-Grounded-AI-5w0em52hopng9j4' }] },
+                    { time: "10:00 - 10:45 AM", session: "Build Your Philosophy Brain with NotebookLM", format: "Activity", details: "Students upload text or notes to build a \"philosophy brain,\" then generate a podcast or answer philosophical prompts using AI.", links: [{ name: 'Google NotebookLM', url: 'https://notebooklm.google.com/' }] },
+                    { time: "10:45 - 11:15 AM", session: "Crossing the Uncanny Valley: AI Voice Tech", format: "Lecture", details: "Explore voice synthesis, realism, identity, and the future of voice-based AI interaction.", presentations: [{ name: 'Crossing the Uncanny Valley: AI Voice Generators in Action', url: 'https://gamma.app/docs/Crossing-the-Uncanny-Valley-AI-Voice-Generators-in-Action-2zy1lc9ygcki0c9'}] },
+                    { time: "11:15 AM - 12:15 PM", session: "Lunch Break", format: "Break", details: "Recharge & informal exploration." },
+                    { time: "12:15 - 1:00 PM", session: "AI in Industry + Augmented Decision-Making", format: "Lecture", details: "Learn how AI is used across healthcare, law, logistics, education, and media and where humans must remain \"in the loop\".", presentations: [{ name: 'AI-Assisted Decision-Making: Tools for Making Confident Choices', url: 'https://gamma.app/docs/AI-Assisted-Decision-Making-Tools-for-Making-Confident-Choices-kb0a7fg9rny32mx' }] },
+                    { time: "1:00 - 3:45 PM", session: "Vibe Coding: No-Code Infographic Creation", format: "Hands-On", details: "Use Gamma, Canva, or similar tools to create a visual one-pager summarizing a core idea from the week.", interactives: [{ name: 'The Art of Vibe Coding', url: 'https://gemini.google.com/share/1873a9b8f8d9' }], externalResources: [{ name: 'The Way of Code', url: 'https://www.thewayofcode.com/' }] },
+                    { time: "3:45 - 4:00 PM", session: "Wrap-Up & Homework", format: "Discussion", details: "Open debrief. Homework: Use a tool like Google Flow to create a short movie about your bootcamp experience.", links: [{ name: 'Google Flow', url: 'https://labs.google/flow/about' }] }
                 ]
             },
             {
                 day: 4,
-                title: "Builders, Creators, and the Future of Al",
-                description: "Final day focused on applied creativity, custom tools, and a look into the Al-powered future.",
+                title: "Capstone & The Future of AI",
+                description: "Day 4: 9:00 AM - 4:00 PM. A capstone project, a creative showcase, and a look to the future.",
                 schedule: [
-                    { time: "9:00 - 9:30 AM", session: "The Future of AI: AGI, ASI & the Singularity", format: "Lecture", details: "Explore Al's predicted trajectory as a general-purpose technology, and concepts like AGI, ASI, and the Singularity." },
-                    { time: "9:30 - 10:00 AM", session: "Custom GPTS: Building Al with Purpose", format: "Lecture", details: "Overview of designing GPTs with memory, rules, personas, and specific tasks using OpenAl's Custom GPT tools." },
-                    { time: "10:00 - 10:30 AM", session: "Hands-On: Build Your Own GPT", format: "Activity", details: "Students create GPTs tailored to specific goals - creative, academic, productivity, or personal assistant." },
-                    { time: "10:30 - 11:30 AM", session: "Gamma.app Presentation Builder Lab", format: "Activity", details: "Students build Al-enhanced visual presentations (e.g., about their GPTs or favorite Al topic explored during the week)." },
-                    { time: "11:30 - 12:30 PM", session: "Lunch Break", format: "Break", details: "Final day lunch break." },
-                    { time: "12:30 - 1:00 PM", session: "Vibe Coding: No-Code Infographic Creation", format: "Activity", details: "Use Gamma, Canva, or similar tools to create a visual one-pager summarizing a core idea from the week." },
-                    { time: "1:00 - 1:30 PM", session: "Al in Gaming: Remixing Classics", format: "Activity", details: "Use Replit or Scratch to customize or remix a basic game (e.g., Tetris or Snake) using Al assistance or storytelling." },
-                    { time: "1:30 - 2:30 PM", session: "Creative Showcase: GPTs, Games, & Slides", format: "Showcase", details: "Final presentations! Students demo GPTS, games, visuals, or slides lightning style or team-based - with audience feedback and celebration." },
-                    { time: "2:30 - 3:00 PM", session: "Closing Ceremony + Certificates", format: "Celebration", details: "Group photo, Al Superlatives, final Q&A, and parting words - end on a high note!" }
+                    { time: "9:00 - 9:30 AM", session: "Icebreaker: Google Vids", format: "Activity", details: "Use Google Vids to generate a quick, AI-powered video about yourself or your bootcamp experience to share with the group.", links: [{ name: 'Google Vids', url: 'https://workspace.google.com/products/vids/' }] },
+                    { time: "9:30 - 10:00 AM", session: "The Future of AI: AGI, ASI & the Singularity", format: "Lecture", details: "Explore AI's predicted trajectory as a general-purpose technology, and concepts like AGI, ASI, and the Singularity.", externalResources: [{ name: 'The Gentle Singularity', url: 'https://blog.samaltman.com/the-gentle-singularity' }], interactives: [{ name: 'An Interactive Breakdown of Sam Altman\'s Vision', url: 'https://g.co/gemini/share/5c16add55497' }] },
+                    { time: "10:00 AM - 12:00 PM", session: "Group Project Hackathon (Capstone)", format: "Hands-On", details: "In groups, develop a business plan and use the week's tools to build an associated infographic, research report, and custom chatbot." },
+                    { time: "12:00 - 1:00 PM", session: "Vibe Coding: Build a Website", format: "Hands-On", details: "Use AI-powered website builders to create a simple, one-page site for your capstone project.", links: [{ name: 'Google Stitch', url: 'https://stitch.withgoogle.com/' }, { name: 'Google AI Studio (Build)', url: 'https://aistudio.google.com/apps' }, { name: 'Firebase Studio', url: 'https://studio.firebase.google.com/' }] },
+                    { time: "1:00 - 2:00 PM", session: "Lunch Break", format: "Break", details: "Final prep for the showcase." },
+                    { time: "2:00 - 3:30 PM", session: "Creative Showcase: Capstone Presentations", format: "Showcase", details: "Final presentations! Student groups demo their projects, business plans, and AI creations to their peers for feedback and celebration." },
+                    { time: "3:30 - 4:00 PM", session: "Closing Ceremony + Final Assignment", format: "Celebration", details: "Group photo, AI Superlatives, final Q&A, and parting words. Final Assignment: Use Google's Food Mood AI to create a unique recipe and share it!", links: [{ name: 'Google Food Mood', url: 'https://artsandculture.google.com/experiment/food-mood/HwHnGalZ3up0EA?hl=en' }] }
+                ]
+            },
+            {
+                day: 5,
+                title: "Lagniappe",
+                description: "A little something extra. Fun, self-paced activities to explore AI's creative side.",
+                schedule: [
+                    { time: "Self-Paced", session: "AI in Gaming: Remixing Classics", format: "Activity", details: "Use Replit or Scratch to customize or remix a basic game (e.g., Tetris or Snake) using AI assistance or storytelling.", links: [{ name: 'Replit', url: 'https://replit.com/' }] },
+                    { time: "Self-Paced", session: "Voice Cloning Lab", format: "Activity", details: "Students use tools like ElevenLabs or OpenAI TTS to create and perform voiceover scenes.", links: [{ name: 'ElevenLabs', url: 'https://elevenlabs.io/' }] }
                 ]
             }
         ];
 
         // --- ICONS ---
-        // SVG icons for different session formats to add visual cues.
         const icons = {
             Lecture: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
             Activity: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
@@ -165,6 +201,11 @@
         // --- DOM ELEMENTS ---
         const navContainer = document.querySelector('#infographic nav');
         const contentPanelsContainer = document.getElementById('content-panels');
+        const linkModal = document.getElementById('linkModal');
+        const modalContent = document.getElementById('modalContent');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalLinksContainer = document.getElementById('modalLinks');
+        const closeModalBtn = document.getElementById('closeModal');
 
         // --- FUNCTIONS ---
 
@@ -175,20 +216,89 @@
          */
         function createTimelineItem(item) {
             const formatClass = formatColors[item.format] || formatColors.Recap;
+            let buttonsHTML = '';
+            
+            // Generate button for "Launch Tool(s)"
+            if (item.links && item.links.length > 0) {
+                const linksJson = JSON.stringify(item.links);
+                buttonsHTML += `
+                    <button
+                        class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 rounded-md border border-purple-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        data-links='${linksJson}'
+                        data-session-title="${item.session}"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        Launch Tool(s)
+                    </button>
+                `;
+            }
+
+            // Generate button for "Interactives"
+            if (item.interactives && item.interactives.length > 0) {
+                const interactivesJson = JSON.stringify(item.interactives);
+                 buttonsHTML += `
+                    <button
+                        class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-teal-300 bg-teal-500/10 hover:bg-teal-500/20 rounded-md border border-teal-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-teal-400"
+                        data-links='${interactivesJson}'
+                        data-session-title="${item.session}"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                        </svg>
+                        Interactives
+                    </button>
+                `;
+            }
+
+            // Generate button for "External Resources"
+            if (item.externalResources && item.externalResources.length > 0) {
+                const resourcesJson = JSON.stringify(item.externalResources);
+                 buttonsHTML += `
+                    <button
+                        class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 rounded-md border border-amber-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-amber-400"
+                        data-links='${resourcesJson}'
+                        data-session-title="${item.session}"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                        External Resources
+                    </button>
+                `;
+            }
+            
+            // Generate button for "Presentation"
+            if (item.presentations && item.presentations.length > 0) {
+                const presentationsJson = JSON.stringify(item.presentations);
+                 buttonsHTML += `
+                    <button
+                        class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 rounded-md border border-rose-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-rose-400"
+                        data-links='${presentationsJson}'
+                        data-session-title="${item.session}"
+                    >
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                       </svg>
+                        Presentation
+                    </button>
+                `;
+            }
+
             return `
                 <div class="timeline-item flex space-x-4">
-                    <!-- Timeline Marker -->
                     <div class="flex flex-col items-center">
                         <div class="flex-shrink-0 w-8 h-8 rounded-full ${formatClass} flex items-center justify-center border">
                            ${icons[item.format] || ''}
                         </div>
                         <div class="w-px h-full bg-slate-600"></div>
                     </div>
-                    <!-- Timeline Content -->
-                    <div class="pb-8">
+                    <div class="pb-8 flex-1">
                         <p class="mb-1 text-sm font-semibold text-slate-300">${item.time}</p>
                         <h4 class="font-bold text-lg text-white">${item.session}</h4>
                         <p class="mt-1 text-slate-400">${item.details}</p>
+                        ${buttonsHTML ? `<div class="mt-4 flex flex-wrap gap-3">${buttonsHTML}</div>` : ''}
                     </div>
                 </div>
             `;
@@ -237,8 +347,33 @@
                 }
             });
         }
+        
+        /**
+         * Shows the modal with the specified links.
+         * @param {Array<object>} links - An array of link objects, each with 'name' and 'url'.
+         * @param {string} title - The title for the modal.
+         */
+        function showLinkModal(links, title) {
+            modalTitle.textContent = title || 'Launch Tools';
+            modalLinksContainer.innerHTML = ''; // Clear previous links
 
-        // --- INITIALIZATION ---
+            links.forEach(link => {
+                const linkEl = document.createElement('a');
+                linkEl.href = link.url;
+                linkEl.target = '_blank'; // Open in new tab
+                linkEl.rel = 'noopener noreferrer';
+                linkEl.className = 'flex items-center justify-between p-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors duration-200';
+                linkEl.innerHTML = `
+                    <span class="font-medium text-cyan-300">${link.name}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                `;
+                modalLinksContainer.appendChild(linkEl);
+            });
+
+            linkModal.classList.remove('hidden');
+        }
 
         /**
          * Initializes the infographic by generating all dynamic content.
@@ -249,13 +384,16 @@
 
             bootcampData.forEach((dayData, index) => {
                 const isActive = index === 0;
+                // Determine button text: "Lagniappe" for day 5, "Day X" otherwise
+                const buttonText = dayData.title === 'Lagniappe' ? 'Lagniappe' : `Day ${dayData.day}`;
+
                 // Create navigation tab
                 navHTML += `
                     <button 
                         class="day-tab flex-1 md:flex-initial md:px-6 py-2 text-sm md:text-base font-semibold rounded-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-800 ${isActive ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}" 
                         data-day="${dayData.day}"
                     >
-                        Day ${dayData.day}
+                        ${buttonText}
                     </button>
                 `;
                 // Create content panel
@@ -265,16 +403,39 @@
             navContainer.innerHTML = navHTML;
             contentPanelsContainer.innerHTML = contentHTML;
 
+            // --- EVENT LISTENERS ---
             // Add event listeners to the new tabs
             document.querySelectorAll('.day-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     switchTab(tab.dataset.day);
                 });
             });
+            
+            // Listener for launching the modal (delegated from the main content container)
+            contentPanelsContainer.addEventListener('click', function(e) {
+                const button = e.target.closest('.launch-modal-btn');
+                if (button) {
+                    const linksData = JSON.parse(button.dataset.links);
+                    const sessionTitle = button.dataset.sessionTitle;
+                    showLinkModal(linksData, sessionTitle);
+                }
+            });
+
+            // Listener for closing the modal via the 'X' button
+            closeModalBtn.addEventListener('click', () => {
+                linkModal.classList.add('hidden');
+            });
+
+            // Listener to close modal on outside click (clicking the backdrop)
+            linkModal.addEventListener('click', function(e) {
+                if (e.target === linkModal) {
+                    linkModal.classList.add('hidden');
+                }
+            });
         }
 
         // Run the initialization function when the script loads.
-        initializeInfographic();
+        document.addEventListener('DOMContentLoaded', initializeInfographic);
 
     </script>
 </body>
