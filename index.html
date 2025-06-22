@@ -11,17 +11,21 @@
             font-family: 'Inter', sans-serif;
         }
         /* Custom scrollbar for better aesthetics */
-        .timeline-container::-webkit-scrollbar {
+        .timeline-container::-webkit-scrollbar,
+        .about-container::-webkit-scrollbar {
             width: 8px;
         }
-        .timeline-container::-webkit-scrollbar-track {
+        .timeline-container::-webkit-scrollbar-track,
+        .about-container::-webkit-scrollbar-track {
             background: #1e293b; /* slate-800 */
         }
-        .timeline-container::-webkit-scrollbar-thumb {
+        .timeline-container::-webkit-scrollbar-thumb,
+        .about-container::-webkit-scrollbar-thumb {
             background: #475569; /* slate-600 */
             border-radius: 4px;
         }
-        .timeline-container::-webkit-scrollbar-thumb:hover {
+        .timeline-container::-webkit-scrollbar-thumb:hover,
+        .about-container::-webkit-scrollbar-thumb:hover {
             background: #64748b; /* slate-500 */
         }
         /* Animation for modal */
@@ -39,6 +43,17 @@
         .modal-scale-in {
             animation: scaleIn 0.2s ease-out forwards;
         }
+        /* Accordion icon rotation */
+        details[open] .chevron-icon {
+            transform: rotate(180deg);
+        }
+        /* Hide default summary marker */
+        summary {
+            list-style: none;
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-white antialiased">
@@ -47,14 +62,25 @@
 
         <!-- Header Section -->
         <header class="text-center mb-8 md:mb-12">
-            <!-- Sponsor Logo -->
+            <!-- Sponsor Logos -->
             <div class="mb-6">
                 <p class="text-sm text-slate-400 mb-2">Sponsored by</p>
-                <img 
-                    src="https://media.licdn.com/dms/image/v2/D560BAQFs6ZeYsqdnxw/company-logo_200_200/company-logo_200_200/0/1726217814435/bigrededucation_logo?e=2147483647&v=beta&t=39OZvn7WGRyGcpW4VCtfWrc9i59usPsG4Y2K7m3y_Pg" 
-                    alt="Big Red Education Logo" 
-                    class="w-24 h-24 mx-auto rounded-full bg-white p-1 shadow-lg shadow-purple-500/20"
-                    onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffffff/94a3b8?text=Logo+Not+Found';">
+                <div class="flex justify-center items-center gap-8">
+                    <a href="https://bigrededucation.com/" target="_blank" rel="noopener noreferrer">
+                        <img 
+                            src="https://media.licdn.com/dms/image/v2/D560BAQFs6ZeYsqdnxw/company-logo_200_200/company-logo_200_200/0/1726217814435/bigrededucation_logo?e=2147483647&v=beta&t=39OZvn7WGRyGcpW4VCtfWrc9i59usPsG4Y2K7m3y_Pg" 
+                            alt="Big Red Education Logo" 
+                            class="w-24 h-24 mx-auto rounded-full bg-white p-1 shadow-lg shadow-purple-500/20"
+                            onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffffff/94a3b8?text=Big+Red+Education';">
+                    </a>
+                    <a href="https://futuresabroad.com/" target="_blank" rel="noopener noreferrer">
+                        <img 
+                            src="https://futuresabroad.com/wp-content/uploads/2025/01/futuresabroad-logo300px.png" 
+                            alt="Futures Abroad Logo" 
+                            class="w-24 h-24 mx-auto rounded-full bg-white p-1 shadow-lg shadow-blue-500/20"
+                            onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffffff/1d4ed8?text=Futures+Abroad';">
+                    </a>
+                </div>
             </div>
 
             <h1 class="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-2">
@@ -97,7 +123,6 @@
 
     <script>
         // --- DATA ---
-        // Updated data reflecting the new "Command Z: AI for Teens" agenda.
         const bootcampData = [
             {
                 day: 1,
@@ -114,7 +139,8 @@
                     { time: "5:00 - 5:45 PM", session: "Dinner Break", format: "Break", details: "Time to recharge and socialize." },
                     { time: "5:45 - 6:15 PM", session: "Custom GPTs: Building AI with Purpose", format: "Lecture", details: "Overview of designing GPTs with memory, rules, personas, and specific tasks using OpenAI's Custom GPT tools." },
                     { time: "6:15 - 6:45 PM", session: "Hands-On: Build Your Own GPT", format: "Hands-On", details: "Students create GPTs tailored to specific goals - creative, academic, productivity, or personal assistant." },
-                    { time: "6:45 - 7:00 PM", session: "Day 1 Wrap-Up + Homework", format: "Recap", details: "Light discussion and preview. Homework: Use AI image generators to create a unique portrait of yourself.", links: [ { name: 'Google Imagen (Gemini)', url: 'https://gemini.google.com' }, { name: 'Imagen (AI Studio)', url: 'https://aistudio.google.com/generate-image' }, { name: 'Google Whisk', url: 'https://labs.google/fx/tools/whisk' }, { name: 'Meta AI', url: 'https://meta.ai' } ] }
+                    { time: "6:45 - 7:00 PM", session: "Day 1 Wrap-Up + Homework", format: "Recap", details: "Light discussion and preview. Homework: Use AI image generators to create a unique portrait of yourself.", links: [ { name: 'Google Imagen (Gemini)', url: 'https://gemini.google.com' }, { name: 'Imagen (AI Studio)', url: 'https://aistudio.google.com/generate-image' }, { name: 'Google Whisk', url: 'https://labs.google/fx/tools/whisk' }, { name: 'Meta AI', url: 'https://meta.ai' } ] },
+                    { format: "Journal", title: "AI Time Capsule: Who Am I—Right Now?", description: "End your day with this short journaling exercise. Let the AI get to know the real you—your habits, hobbies, and personality.", prompt: "I want you to act like an interviewer who is deeply curious about getting to know me. Today is all about the present. Ask me a series of thoughtful questions that help me reflect on who I am right now. Focus on my personality, interests, routines, passions, and daily life. Once you ask the questions, let me answer them one by one.\n\nAfter I’ve responded to all of them, save that information as my “Day One AI Journal Entry.” Be encouraging, kind, and curious—but don’t overanalyze or give feedback yet. Just listen and store it." }
                 ]
             },
             {
@@ -125,13 +151,14 @@
                     { time: "9:00 - 9:30 AM", session: "Icebreaker: Career Dreamer", format: "Activity", details: "Explore potential career paths with Google's Career Dreamer AI and share surprising or confirming discoveries about your future direction.", links: [{ name: 'Google Career Dreamer', url: 'https://grow.google/career-dreamer/home' }] },
                     { time: "9:30 - 10:00 AM", session: "AI Terminology Deep Dive", format: "Lecture", details: "Clarify foundational terms like tokens, weights, embeddings, hallucinations, and inference.", interactives: [{ name: 'AI Terminology Deep Dive', url: 'https://bfisher911.github.io/AI-Terminology-Deep-Dive/' }] },
                     { time: "10:00 - 10:30 AM", session: "AI MythBusters: Truth or Hype?", format: "Activity", details: "Interactive myth-vs-truth session with live voting and discussion via Top Hat." },
-                    { time: "10:30 - 11:15 AM", session: "AI in Higher Education: What to Expect", format: "Lecture", details: "Explore the evolving role of AI in college policies, risks, human-in-the-loop ethics, and responsible use.", interactives: [{ name: 'A Student’s Guide to Using Generative AI', url: 'https://bfisher911.github.io/Student-Guide-to-Using-Generative-AI/' }] },
+                    { time: "10:30 - 11:15 AM", session: "AI in Higher Education: What to Expect", format: "Lecture", details: "Explore the evolving role of AI in college policies, risks, human-in-the-loop ethics, and responsible use.", interactives: [{ name: 'A Student’s Guide to Using Generative AI', url: 'https://bfisher911.github.io/Student-Guide-to-Using-Generative-AI/' }], links: [{ name: 'Google Learn About', url: 'https://learning.google.com/experiments/learn-about' }] },
                     { time: "11:15 AM - 12:00 PM", session: "AI Ethics & Bias in the Machine", format: "Lecture", details: "Examine real-world bias in datasets, AI-generated decisions, and their social impact.", presentations: [{ name: 'AI Ethics & Bias in the Machine', url: 'https://gamma.app/docs/AI-Ethics-Bias-in-the-Machine-h0t0gsp671bpbof'}] },
                     { time: "12:00 - 1:00 PM", session: "Lunch Break", format: "Break", details: "Social time and recovery." },
                     { time: "1:00 - 1:45 PM", session: "AI Ethics Debate", format: "Activity", details: "Students debate controversial uses of AI (e.g., autonomous drones, AI grading, predictive policing) with assigned viewpoints.", interactives: [{ name: 'AI Ethics Debate Workshop', url: 'https://bfisher911.github.io/AI-Ethics-Debate-Workshop/'}] },
-                    { time: "1:45 - 2:30 PM", session: "AI for Research", format: "Lecture", details: "Demonstration of tools like Perplexity.ai, SciSpace, Research Rabbit, Elicit, and Connected Papers for academic research workflows.", presentations: [{ name: 'Deep Research in AI', url: 'https://gamma.app/docs/Deep-Research-in-AI-pvty03b0ea1zs6o' }, { name: 'AI for Research: Tools to Enhance Your Academic Journey', url: 'https://gamma.app/docs/AI-for-Research-Tools-to-Enhance-Your-Academic-Journey-lawf231zz067duc' }] },
+                    { time: "1:45 - 2:30 PM", session: "AI for Research", format: "Lecture", details: "Demonstration of tools like Perplexity.ai, SciSpace, Research Rabbit, Elicit, and Connected Papers for academic research workflows.", presentations: [{ name: 'Deep Research in AI', url: 'https://gamma.app/docs/Deep-Research-in-AI-pvty03b0ea1zs6o' }, { name: 'AI for Research: Tools to Enhance Your Academic Journey', url: 'https://gamma.app/docs/AI-for-Research-Tools-to-Enhance-Your-Academic-Journey-lawf231zz067duc' }], links: [{name: 'Perplexity', url: 'https://perplexity.ai'}, {name: 'SciSpace', url: 'https://scispace.com/'}, {name: 'Research Rabbit', url: 'https://www.researchrabbit.ai/'}, {name: 'Connected Papers', url: 'https://www.connectedpapers.com/'}, {name: 'Consensus', url: 'https://consensus.app/'}, {name: 'Elicit', url: 'https://elicit.com/'}, {name: 'Scite', url: 'https://scite.ai/'}, {name: 'LitMaps', url: 'https://www.litmaps.com/'}, {name: 'Jenni', url: 'https://jenni.ai/'}, {name: 'WriteFull', url: 'https://www.writefull.com/'}, {name: 'Julius', url: 'https://julius.ai/'}, {name: 'Wolfram Alpha', url: 'https://www.wolframalpha.com/'}, {name: 'ChatPDF', url: 'https://www.chatpdf.com/'}, {name: 'Dataline', url: 'https://dataline.app/'}] },
                     { time: "2:30 - 3:45 PM", session: "Gamma.app Presentation Builder Lab", format: "Activity", details: "Students build AI-enhanced visual presentations on an academic topic of their choice.", links: [{ name: 'Gamma.app', url: 'https://gamma.app' }] },
-                    { time: "3:45 - 4:00 PM", session: "Daily Wrap-Up + Homework", format: "Reflection", details: "Journaling and discussion. Homework: Use Google Illuminate to upload a document and turn it into a podcast to listen to.", links: [{ name: 'Google Illuminate', url: 'https://illuminate.google.com/explore' }] }
+                    { time: "3:45 - 4:00 PM", session: "Daily Wrap-Up + Homework", format: "Reflection", details: "Journaling and discussion. Homework: Use Google Illuminate to upload a document and turn it into a podcast to listen to.", links: [{ name: 'Google Illuminate', url: 'https://illuminate.google.com/explore' }] },
+                    { format: "Journal", title: "AI Time Capsule: Where Am I Going?", description: "Imagine you’re the main character in a documentary. What’s your story? Let the AI explore your future hopes and goals.", prompt: "Today, let’s talk about my future. Pretend you are a documentary filmmaker following the early life of someone who will go on to do something amazing. Ask me questions that uncover my dreams, goals, and even wild ambitions. Encourage honesty—even if I’m unsure or still figuring it out.\n\nAfter I answer all of them, save that as my “Day Two AI Journal Entry.” Just record and remember—no judgment, no predictions yet." }
                 ]
             },
             {
@@ -146,7 +173,8 @@
                     { time: "11:15 AM - 12:15 PM", session: "Lunch Break", format: "Break", details: "Recharge & informal exploration." },
                     { time: "12:15 - 1:00 PM", session: "AI in Industry + Augmented Decision-Making", format: "Lecture", details: "Learn how AI is used across healthcare, law, logistics, education, and media and where humans must remain \"in the loop\".", presentations: [{ name: 'AI-Assisted Decision-Making: Tools for Making Confident Choices', url: 'https://gamma.app/docs/AI-Assisted-Decision-Making-Tools-for-Making-Confident-Choices-kb0a7fg9rny32mx' }] },
                     { time: "1:00 - 3:45 PM", session: "Vibe Coding: No-Code Infographic Creation", format: "Hands-On", details: "Use Gamma, Canva, or similar tools to create a visual one-pager summarizing a core idea from the week.", interactives: [{ name: 'The Art of Vibe Coding', url: 'https://gemini.google.com/share/1873a9b8f8d9' }], externalResources: [{ name: 'The Way of Code', url: 'https://www.thewayofcode.com/' }] },
-                    { time: "3:45 - 4:00 PM", session: "Wrap-Up & Homework", format: "Discussion", details: "Open debrief. Homework: Use a tool like Google Flow to create a short movie about your bootcamp experience.", links: [{ name: 'Google Flow', url: 'https://labs.google/flow/about' }] }
+                    { time: "3:45 - 4:00 PM", session: "Wrap-Up & Homework", format: "Discussion", details: "Open debrief. Homework: Use a tool like Google Flow to create a short movie about your bootcamp experience.", links: [{ name: 'Google Flow', url: 'https://labs.google/flow/about' }] },
+                    { format: "Journal", title: "AI Time Capsule: Why Do I Do What I Do?", description: "Let’s explore your inner compass—your values, beliefs, and motivations. This is about meaning, not just plans.", prompt: "Today is about values and meaning. I want you to help me reflect on what really matters to me. Ask me deep, honest questions about what I believe, what I stand for, and what I’ve learned from my past. Help me discover what drives me beyond goals and achievements.\n\nAfter I answer, label this as my “Day Three AI Journal Entry.” Don’t give interpretations—just capture who I am on the inside." }
                 ]
             },
             {
@@ -160,7 +188,8 @@
                     { time: "12:00 - 1:00 PM", session: "Vibe Coding: Build a Website", format: "Hands-On", details: "Use AI-powered website builders to create a simple, one-page site for your capstone project.", links: [{ name: 'Google Stitch', url: 'https://stitch.withgoogle.com/' }, { name: 'Google AI Studio (Build)', url: 'https://aistudio.google.com/apps' }, { name: 'Firebase Studio', url: 'https://studio.firebase.google.com/' }] },
                     { time: "1:00 - 2:00 PM", session: "Lunch Break", format: "Break", details: "Final prep for the showcase." },
                     { time: "2:00 - 3:30 PM", session: "Creative Showcase: Capstone Presentations", format: "Showcase", details: "Final presentations! Student groups demo their projects, business plans, and AI creations to their peers for feedback and celebration." },
-                    { time: "3:30 - 4:00 PM", session: "Closing Ceremony + Final Assignment", format: "Celebration", details: "Group photo, AI Superlatives, final Q&A, and parting words. Final Assignment: Use Google's Food Mood AI to create a unique recipe and share it!", links: [{ name: 'Google Food Mood', url: 'https://artsandculture.google.com/experiment/food-mood/HwHnGalZ3up0EA?hl=en' }] }
+                    { time: "3:30 - 4:00 PM", session: "Closing Ceremony + Final Assignment", format: "Celebration", details: "Group photo, AI Superlatives, final Q&A, and parting words. Final Assignment: Use Google's Food Mood AI to create a unique recipe and share it!", links: [{ name: 'Google Food Mood', url: 'https://artsandculture.google.com/experiment/food-mood/HwHnGalZ3up0EA?hl=en' }] },
+                    { format: "Journal", title: "Final Forecast: Predict My Next 50 Years", description: "Now that the AI knows you, give it one last prompt—your personal time capsule reveal. Have fun with it, or get as deep as you’d like. Then share your favorite predictions with the class.", prompt: "Based on everything you’ve learned about me from my previous journal entries, I want you to now act as a time-traveling biographer from the year 2075. Write a vivid and creative (yet realistic) summary of how my life might unfold over the next 50 years. Consider my personality, interests, values, goals, and dreams. Don’t be too rigid—include possible twists, turns, challenges, and milestones. Think of it as a story that captures both the journey and the spirit of who I am.\n\nTitle it: “The Next 50 Years of [Insert My Name Here]”" }
                 ]
             },
             {
@@ -171,6 +200,20 @@
                     { time: "Self-Paced", session: "AI in Gaming: Remixing Classics", format: "Activity", details: "Use Replit or Scratch to customize or remix a basic game (e.g., Tetris or Snake) using AI assistance or storytelling.", links: [{ name: 'Replit', url: 'https://replit.com/' }] },
                     { time: "Self-Paced", session: "Voice Cloning Lab", format: "Activity", details: "Students use tools like ElevenLabs or OpenAI TTS to create and perform voiceover scenes.", links: [{ name: 'ElevenLabs', url: 'https://elevenlabs.io/' }] }
                 ]
+            },
+            {
+                day: 6,
+                type: 'about',
+                title: "About the Instructor",
+                content: {
+                    name: "Dr. Blaine Fisher",
+                    imageUrl: "https://media.licdn.com/dms/image/v2/D5603AQHu_qLKSkfAJA/profile-displayphoto-shrink_800_800/B56ZXP61pzGcAc-/0/1742950066235?e=1755734400&v=beta&t=zIE2mzjjEPI6yBeScx2wJW173I_6EI4qEfVlEX9AcdE",
+                    bio: "Dr. Blaine Fisher exemplifies the essence of a modern polymath, integrating expertise across diverse disciplines. He holds a Ph.D. in Geography and Anthropology from Louisiana State University, specializing in Maya Archaeology, complemented by a Bachelor's degree from Southeastern Louisiana University, a Master’s in Healthcare Management from the University of New Orleans, a Master’s in Liberal Arts from Tulane University, and a Post-Graduate Certificate in Geographic Information Systems (GIS) from Tulane University. This extensive academic background reflects his commitment to lifelong learning and intellectual curiosity.\n\nAt Tulane University, Dr. Fisher plays a vital role in multiple capacities. As the administrator for the Canvas Learning Management System, he significantly enhances the educational technology infrastructure. At the Innovative Learning Center, he supports faculty in integrating innovative teaching practices, and as a professor, he shares his extensive knowledge in subjects ranging from Emergency Management to Information Technology. His role as a Remote Sensing and Geospatial Scientist for Tulane’s River Science and Coastal Engineering Department further showcases his versatility and expertise.\n\nDr. Fisher’s career is marked by a diverse trajectory. Before academia, he served as a paramedic, gaining critical experience in emergency response and healthcare. His career then expanded into environmental health and safety compliance, illustrating his ability to excel in various fields.\n\nBeyond his academic and professional responsibilities, Dr. Fisher is involved in coastal restoration projects and archaeological excavations of ancient Maya sites, merging his scientific expertise with a passion for cultural preservation. His dedication to education is evident in his efforts to train over 2,000 faculty members and lead teams in advancing classroom technology at Tulane.\n\nDr. Fisher’s expertise spans artificial Intelligence, Maya archaeology, emergency management, and geospatial science, highlighting his intellectual agility and interdisciplinary approach. He excels in curriculum development, risk assessment, and advanced geographical research, contributing to both academic and practical applications. His work is characterized by a commitment to excellence and a drive to innovate across all areas of his expertise.\n\nDr. Blaine Fisher’s career demonstrates the power of broad intellectual pursuits and the ability to contribute meaningfully across multiple domains.",
+                    links: [
+                        { name: "Subscribe to my 'Hooked on AI' Newsletter", url: "https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7257851677544710145" },
+                        { name: "View my 'Modern Polymath' Infographic", url: "https://bfisher911.github.io/A-Modern-Polymath/" }
+                    ]
+                }
             }
         ];
 
@@ -195,7 +238,8 @@
             "Hands-On": "bg-green-500/20 text-green-300 border-green-500/30",
             Showcase: "bg-purple-500/20 text-purple-300 border-purple-500/30",
             Celebration: "bg-pink-500/20 text-pink-300 border-pink-500/30",
-            Recap: "bg-gray-500/20 text-gray-300 border-gray-500/30"
+            Recap: "bg-gray-500/20 text-gray-300 border-gray-500/30",
+            Journal: "bg-purple-500/20 text-purple-300 border-purple-500/30"
         }
 
         // --- DOM ELEMENTS ---
@@ -209,81 +253,80 @@
 
         // --- FUNCTIONS ---
 
-        /**
-         * Creates and returns the HTML for a single timeline item.
-         * @param {object} item - The schedule item object.
-         * @returns {string} - The HTML string for the timeline item.
-         */
+        function createAboutPanel(dayData, isActive) {
+            const { name, imageUrl, bio, links } = dayData.content;
+            const bioParagraphs = bio.split('\n\n').map(p => `<p class="text-slate-400 mb-4">${p}</p>`).join('');
+            const linkButtons = links.map(link => `
+                <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-300 bg-cyan-500/10 hover:bg-cyan-500/20 rounded-md border border-cyan-500/30 transition-all">
+                    ${link.name}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+            `).join('');
+
+            return `
+                <div id="day-${dayData.day}-content" class="day-panel about-container max-h-[70vh] overflow-y-auto pr-2 ${isActive ? 'block' : 'hidden'}">
+                    <div class="md:flex md:gap-8">
+                        <div class="md:w-1/3 text-center md:text-left mb-6 md:mb-0">
+                            <img src="${imageUrl}" alt="${name}" class="w-48 h-48 rounded-full mx-auto md:mx-0 shadow-lg border-4 border-slate-700">
+                            <h3 class="text-3xl font-bold text-white mt-4">${name}</h3>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="prose prose-invert max-w-none prose-p:text-slate-400 prose-headings:text-white">
+                                ${bioParagraphs}
+                            </div>
+                            <div class="mt-6 flex flex-wrap gap-4">
+                                ${linkButtons}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createJournalEntry(item) {
+            return `
+                <div class="journal-entry mt-8">
+                     <details class="bg-slate-900/50 rounded-lg border border-purple-500/30 shadow-lg shadow-purple-500/10 overflow-hidden">
+                        <summary class="p-4 cursor-pointer flex justify-between items-center text-lg font-semibold text-purple-300 hover:bg-slate-800/50 transition-colors">
+                            <span class="flex items-center gap-3">
+                                <span class="text-xl">✍️</span>
+                                <span>AI Time Capsule: Reflective Journaling</span>
+                            </span>
+                            <svg class="w-5 h-5 transform transition-transform duration-200 chevron-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="px-6 pb-6 border-t border-purple-500/30">
+                            <h5 class="font-bold text-white mb-1 mt-4 text-md">${item.title}</h5>
+                            <p class="text-slate-400 mb-4 text-sm">${item.description}</p>
+                            <div class="bg-slate-900 p-4 rounded-md border border-slate-700 relative">
+                                <button class="copy-prompt-btn absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-slate-300 px-2 py-1 text-xs font-semibold rounded-md transition-all">Copy Prompt</button>
+                                <pre class="prompt-text-source text-slate-300 whitespace-pre-wrap text-sm leading-relaxed font-mono">${item.prompt}</pre>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-3">💡 Tip: Use phrases like "Save this to memory" or "Remember this for later" so the AI can recall your entries.</p>
+                        </div>
+                    </details>
+                </div>
+            `;
+        }
+
         function createTimelineItem(item) {
             const formatClass = formatColors[item.format] || formatColors.Recap;
             let buttonsHTML = '';
             
-            // Generate button for "Launch Tool(s)"
             if (item.links && item.links.length > 0) {
                 const linksJson = JSON.stringify(item.links);
-                buttonsHTML += `
-                    <button
-                        class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 rounded-md border border-purple-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-purple-400"
-                        data-links='${linksJson}'
-                        data-session-title="${item.session}"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                        Launch Tool(s)
-                    </button>
-                `;
+                buttonsHTML += `<button class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 rounded-md border border-purple-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-purple-400" data-links='${linksJson}' data-session-title="${item.session}"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>Launch Tool(s)</button>`;
             }
-
-            // Generate button for "Interactives"
             if (item.interactives && item.interactives.length > 0) {
                 const interactivesJson = JSON.stringify(item.interactives);
-                 buttonsHTML += `
-                    <button
-                        class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-teal-300 bg-teal-500/10 hover:bg-teal-500/20 rounded-md border border-teal-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-teal-400"
-                        data-links='${interactivesJson}'
-                        data-session-title="${item.session}"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
-                        </svg>
-                        Interactives
-                    </button>
-                `;
+                 buttonsHTML += `<button class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-teal-300 bg-teal-500/10 hover:bg-teal-500/20 rounded-md border border-teal-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-teal-400" data-links='${interactivesJson}' data-session-title="${item.session}"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>Interactives</button>`;
             }
-
-            // Generate button for "External Resources"
             if (item.externalResources && item.externalResources.length > 0) {
                 const resourcesJson = JSON.stringify(item.externalResources);
-                 buttonsHTML += `
-                    <button
-                        class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 rounded-md border border-amber-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-amber-400"
-                        data-links='${resourcesJson}'
-                        data-session-title="${item.session}"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                        </svg>
-                        External Resources
-                    </button>
-                `;
+                 buttonsHTML += `<button class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 rounded-md border border-amber-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-amber-400" data-links='${resourcesJson}' data-session-title="${item.session}"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>External Resources</button>`;
             }
-            
-            // Generate button for "Presentation"
             if (item.presentations && item.presentations.length > 0) {
                 const presentationsJson = JSON.stringify(item.presentations);
-                 buttonsHTML += `
-                    <button
-                        class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 rounded-md border border-rose-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-rose-400"
-                        data-links='${presentationsJson}'
-                        data-session-title="${item.session}"
-                    >
-                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                       </svg>
-                        Presentation
-                    </button>
-                `;
+                 buttonsHTML += `<button class="launch-modal-btn inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 rounded-md border border-rose-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-rose-400" data-links='${presentationsJson}' data-session-title="${item.session}"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>Presentation</button>`;
             }
 
             return `
@@ -303,15 +346,18 @@
                 </div>
             `;
         }
-
-        /**
-         * Creates and returns the HTML for a full day's content panel.
-         * @param {object} dayData - The data object for a single day.
-         * @param {boolean} isActive - Whether this panel should be visible initially.
-         * @returns {string} - The HTML string for the content panel.
-         */
+        
         function createContentPanel(dayData, isActive) {
-            const timelineItemsHTML = dayData.schedule.map(createTimelineItem).join('');
+            if (dayData.type === 'about') {
+                return createAboutPanel(dayData, isActive);
+            }
+
+            const regularSchedule = dayData.schedule.filter(item => item.format !== 'Journal');
+            const journalEntries = dayData.schedule.filter(item => item.format === 'Journal');
+
+            const timelineItemsHTML = regularSchedule.map(createTimelineItem).join('');
+            const journalHTML = journalEntries.map(createJournalEntry).join('');
+
             return `
                 <div id="day-${dayData.day}-content" class="day-panel ${isActive ? 'block' : 'hidden'}">
                     <div class="text-center mb-6">
@@ -321,22 +367,17 @@
                     <div class="relative timeline-container max-h-[60vh] overflow-y-auto pr-2 -mr-2">
                         ${timelineItemsHTML}
                     </div>
+                    ${journalHTML}
                 </div>
             `;
         }
 
-        /**
-         * Switches the visible content panel.
-         * @param {number} dayNumber - The day number to show.
-         */
         function switchTab(dayNumber) {
-            // Update content panels
             document.querySelectorAll('.day-panel').forEach(panel => {
                 panel.classList.add('hidden');
             });
             document.getElementById(`day-${dayNumber}-content`).classList.remove('hidden');
 
-            // Update tab styles
             document.querySelectorAll('.day-tab').forEach(tab => {
                 if (tab.dataset.day == dayNumber) {
                     tab.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
@@ -348,55 +389,37 @@
             });
         }
         
-        /**
-         * Shows the modal with the specified links.
-         * @param {Array<object>} links - An array of link objects, each with 'name' and 'url'.
-         * @param {string} title - The title for the modal.
-         */
         function showLinkModal(links, title) {
             modalTitle.textContent = title || 'Launch Tools';
-            modalLinksContainer.innerHTML = ''; // Clear previous links
-
+            modalLinksContainer.innerHTML = ''; 
             links.forEach(link => {
                 const linkEl = document.createElement('a');
                 linkEl.href = link.url;
-                linkEl.target = '_blank'; // Open in new tab
+                linkEl.target = '_blank';
                 linkEl.rel = 'noopener noreferrer';
                 linkEl.className = 'flex items-center justify-between p-3 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors duration-200';
-                linkEl.innerHTML = `
-                    <span class="font-medium text-cyan-300">${link.name}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                `;
+                linkEl.innerHTML = `<span class="font-medium text-cyan-300">${link.name}</span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>`;
                 modalLinksContainer.appendChild(linkEl);
             });
-
             linkModal.classList.remove('hidden');
         }
 
-        /**
-         * Initializes the infographic by generating all dynamic content.
-         */
         function initializeInfographic() {
             let navHTML = '';
             let contentHTML = '';
 
             bootcampData.forEach((dayData, index) => {
                 const isActive = index === 0;
-                // Determine button text: "Lagniappe" for day 5, "Day X" otherwise
-                const buttonText = dayData.title === 'Lagniappe' ? 'Lagniappe' : `Day ${dayData.day}`;
+                let buttonText;
+                if(dayData.type === 'about') {
+                    buttonText = 'About';
+                } else if (dayData.title === 'Lagniappe') {
+                    buttonText = 'Lagniappe';
+                } else {
+                    buttonText = `Day ${dayData.day}`;
+                }
 
-                // Create navigation tab
-                navHTML += `
-                    <button 
-                        class="day-tab flex-1 md:flex-initial md:px-6 py-2 text-sm md:text-base font-semibold rounded-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-800 ${isActive ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}" 
-                        data-day="${dayData.day}"
-                    >
-                        ${buttonText}
-                    </button>
-                `;
-                // Create content panel
+                navHTML += `<button class="day-tab flex-1 md:flex-initial md:px-6 py-2 text-sm md:text-base font-semibold rounded-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-800 ${isActive ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}" data-day="${dayData.day}">${buttonText}</button>`;
                 contentHTML += createContentPanel(dayData, isActive);
             });
 
@@ -404,37 +427,51 @@
             contentPanelsContainer.innerHTML = contentHTML;
 
             // --- EVENT LISTENERS ---
-            // Add event listeners to the new tabs
             document.querySelectorAll('.day-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    switchTab(tab.dataset.day);
-                });
+                tab.addEventListener('click', () => { switchTab(tab.dataset.day); });
             });
             
-            // Listener for launching the modal (delegated from the main content container)
             contentPanelsContainer.addEventListener('click', function(e) {
-                const button = e.target.closest('.launch-modal-btn');
-                if (button) {
-                    const linksData = JSON.parse(button.dataset.links);
-                    const sessionTitle = button.dataset.sessionTitle;
+                // Handle "Copy Prompt" button clicks
+                const copyBtn = e.target.closest('.copy-prompt-btn');
+                if (copyBtn) {
+                    const promptContainer = copyBtn.parentElement;
+                    const preElement = promptContainer.querySelector('.prompt-text-source');
+                    if (preElement) {
+                        const promptText = preElement.textContent;
+                        const textArea = document.createElement("textarea");
+                        textArea.value = promptText;
+                        textArea.style.position = "fixed";
+                        textArea.style.opacity = "0";
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        try {
+                            document.execCommand('copy');
+                            copyBtn.textContent = 'Copied!';
+                            setTimeout(() => { copyBtn.textContent = 'Copy Prompt'; }, 2000);
+                        } catch (err) {
+                            console.error('Failed to copy text: ', err);
+                            copyBtn.textContent = 'Error';
+                        }
+                        document.body.removeChild(textArea);
+                    }
+                    return; // Stop further processing
+                }
+
+                // Handle "Launch Modal" button clicks
+                const launchBtn = e.target.closest('.launch-modal-btn');
+                if (launchBtn) {
+                    const linksData = JSON.parse(launchBtn.dataset.links);
+                    const sessionTitle = launchBtn.dataset.sessionTitle;
                     showLinkModal(linksData, sessionTitle);
                 }
             });
 
-            // Listener for closing the modal via the 'X' button
-            closeModalBtn.addEventListener('click', () => {
-                linkModal.classList.add('hidden');
-            });
-
-            // Listener to close modal on outside click (clicking the backdrop)
-            linkModal.addEventListener('click', function(e) {
-                if (e.target === linkModal) {
-                    linkModal.classList.add('hidden');
-                }
-            });
+            closeModalBtn.addEventListener('click', () => { linkModal.classList.add('hidden'); });
+            linkModal.addEventListener('click', (e) => { if (e.target === linkModal) { linkModal.classList.add('hidden'); } });
         }
 
-        // Run the initialization function when the script loads.
         document.addEventListener('DOMContentLoaded', initializeInfographic);
 
     </script>
